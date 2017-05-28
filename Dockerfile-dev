@@ -25,18 +25,16 @@ RUN apk add --update \
       ffmpeg-dev \
       portaudio-dev \
       mysql-dev \
-      openssl \
-&&  easy_install pyaudio \
+      openssl
+
+RUN easy_install pyaudio \
 &&  easy_install pydub==0.9.4 \
 &&  easy_install numpy==1.8.2 \
 &&  easy_install scipy==0.12.1 \
-&&  pip install --no-cache-dir MySQL-python \
-&&  git clone https://github.com/worldveil/dejavu.git /dejavu \
+&&  pip install --no-cache-dir MySQL-python
+
+RUN  git clone https://github.com/worldveil/dejavu.git /dejavu \
 &&  cd /dejavu \
-&&  python ./setup.py install \
-&&  cp dejavu.cnf.SAMPLE dejavu.cnf \
-&&  apk del .build-deps
+&&  python ./setup.py install
 
 WORKDIR /dejavu
-
-ENTRYPOINT ["python", "/dejavu/dejavu.py", "--config", "/dejavu/dejavu.cnf"]
